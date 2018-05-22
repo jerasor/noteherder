@@ -28,6 +28,24 @@ class NodeList extends React.Component {
         }
     }
 
+    handleNoteClick(item, _ev) {
+        
+        let Note = [...this.state.Note]
+
+        Note.forEach((n) => {
+            if(n===item) {
+                n.active = 'active'
+            } else {
+                n.active = 'notActive'
+            }
+        })
+
+        this.setState({
+            Note: Note
+        })
+
+    }
+
     render() {
 
         return (
@@ -39,7 +57,12 @@ class NodeList extends React.Component {
                     return(
                         <a className={item.active}>
                             <li>
-                                <div className="note">
+                                <div 
+                                    className="note"
+                                    onClick={() => (
+                                        this.handleNoteClick(item)
+                                    )}
+                                >
                                 <div className="note-title">
                                     {item.title}
                                 </div>
