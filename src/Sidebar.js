@@ -9,6 +9,8 @@ class Sidebar extends React.Component {
     constructor() {
         super()
 
+        //the state of this component is used to 
+        //simulate an on hover event
         this.state = {
             hoverStyle: {
                 position: 'absolute',
@@ -20,6 +22,8 @@ class Sidebar extends React.Component {
         }
     }
 
+    //handles the hover style
+    //essenttially toggles the display of the hover image (opacity is 0 or not)
     hovered(_ev) {
 
         let hover = !(this.state.hovering)
@@ -77,6 +81,7 @@ class Sidebar extends React.Component {
     }
 }
 
+//the various styles for this component
 const styles = {
     sidebar: {
         width: '6rem',

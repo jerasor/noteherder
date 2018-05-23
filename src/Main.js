@@ -10,7 +10,8 @@ class Main extends React.Component {
         super()
 
         
-
+        //keeps track of the notes for its child components (NoteList, NoteForm)
+        //and also keeps track of the activeNote information (title and description)
         this.state = {
             Note: [
                 {
@@ -35,6 +36,9 @@ class Main extends React.Component {
 
     }
 
+    //the handle click for the NoteList component, takes in the clicked note as item
+    //sets the state of this componenets active variables (activeNoteDescription, activeNoteTitle)
+    //of the clicked note (title and description)
     handleNoteClick(item, _ev) {
         
         let Note = [...this.state.Note]
@@ -59,6 +63,10 @@ class Main extends React.Component {
 
     }
 
+    //updates the active note's title and description
+    //and the component's active variables
+    //if title or description is passed in as undefined,
+    //then that part of the active note will not be changed
     changeActiveNote(title, description) {
 
         let note = [...this.state.Note]
@@ -87,10 +95,14 @@ class Main extends React.Component {
 
     }
 
+    //changes the active note's title to the target's value
+    //(the target should be the input of NoteForm)
     handleInputChange(ev) {
         this.changeActiveNote(ev.target.value, undefined)
     }
 
+    //changes the active note's text to the target's value
+    //(the target should be the textarea of NoteForm)
     handleTextAreaChange(ev) {
         this.changeActiveNote(undefined, ev.target.value)
     }
@@ -119,7 +131,6 @@ const style = {
     display: 'flex',
     height: '100vh',
     alignItems: 'stretch',
-
 }
 
 export default Main
