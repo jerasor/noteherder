@@ -1,45 +1,24 @@
 import React from 'react'
 
 import './NoteList.css'
+import Note from './Note'
 
-class NodeList extends React.Component {
+const NoteList = ({ notes, setCurrentNote }) => {
 
-    render() {
-
-        return (
-            <div className="NoteList">
-            <h3>Notes</h3>
-            <ul id="notes">
-                
-                {this.props.note.map((item)=> {
-                    return(
-                        <a className={item.active}>
-                            <li>
-                                <div 
-                                    className="note"
-                                    onClick={() => (
-                                        this.props.click(item)
-                                    )}
-                                >
-                                <div className="note-title">
-                                    {item.title}
-                                </div>
-                                <div className="note-body">
-                                    <p>
-                                    {item.description}
-                                    </p>
-                                </div>
-                                </div>
-                            </li>
-                        </a>
-                    )
-                    })
-                }
-                
-            </ul>
-            </div>
-        )
-    }   
+  return (
+    <div className="NoteList">
+      <h3>Notes</h3>
+      <ul id="notes">
+        { notes.map(note => (
+          <Note
+            key={note.id}
+            note={note}
+            setCurrentNote={setCurrentNote}
+          />
+        ))}
+      </ul>
+    </div>
+  )
 }
 
-export default NodeList
+export default NoteList
