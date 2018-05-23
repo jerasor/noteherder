@@ -69,7 +69,7 @@ class Sidebar extends React.Component {
             </div>
             <a className="new-note" href="/notes" style={styles.newNote}>
                 <img src={newHover} alt="New note" style={styles.newNoteImg}/>
-                <img className="outline" src={newIcon} alt="New note" style={this.state.hoverStyle} onMouseEnter={()=>this.hovered()} onMouseOut={()=>this.hovered()}/>
+                <img className="outline" src={newIcon} alt="New note" style={this.state.hoverStyle} onMouseEnter={()=>this.hovered()} onMouseLeave={()=>this.hovered()}/>
             </a>
             <div className="SignOut" style={styles.signOut}>
                 <button style={styles.signOutButton}>
