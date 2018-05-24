@@ -14,16 +14,21 @@ class App extends Component {
     auth.onAuthStateChanged(
       (user) => {
         if (user) {
-          this.handleAuth()
+          this.handleAuth(user.uid)
+          localStorage.setItem('uid', user.uid)
         } else {
           this.handleUnauth()
+          localStorage.clear()
         }
       }
     )
+
+    this.setState({ uid: localStorage.getItem('uid') })
+
   }
 
-  handleAuth = () => {
-    this.setState({ uid: 'dstrus' })
+  handleAuth = (uid) => {
+    this.setState({ uid: uid })
   }
 
   handleUnauth = () => {
