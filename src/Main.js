@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Sidebar from './Sidebar'
 import NoteList from './NoteList'
 import NoteForm from './NoteForm'
+import base from './rebase'
 
 class Main extends Component {
 constructor() {
@@ -19,6 +20,18 @@ constructor() {
         notes: n,
     }
 }
+
+componentWillMount() {
+    this.ref = base.syncState('notes', {
+      context: this,
+      state: 'notes',
+      asArray: true
+    });
+  }
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+  
 
 blankNote = () => {
     return {
