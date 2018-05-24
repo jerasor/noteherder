@@ -1,111 +1,99 @@
 import React, { Component } from 'react'
 
+import base from './base'
 import Sidebar from './Sidebar'
 import NoteList from './NoteList'
 import NoteForm from './NoteForm'
-import base from './rebase'
 
 class Main extends Component {
-constructor() {
+  constructor() {
     super()
-
-    let n = []
-
-    if (localStorage.getItem('notes')) {
-        n = JSON.parse(localStorage.getItem('notes'))
-    }
-
     this.state = {
-        currentNote: this.blankNote(),
-        notes: n,
+      currentNote: this.blankNote(),
+      notes: [],
     }
-}
+  }
 
-componentWillMount() {
-    this.ref = base.syncState('notes', {
+  componentWillMount() {
+    base.syncState('notes', {
       context: this,
       state: 'notes',
-      asArray: true
-    });
+      asArray: true,
+    })
   }
-  componentWillUnmount() {
-    base.removeBinding(this.ref);
-  }
-  
 
-blankNote = () => {
+  blankNote = () => {
     return {
-    id: null,
-    title: '',
-    body: '',
+      id: null,
+      title: '',
+      body: '',
     }
-}
+  }
 
-setCurrentNote = (note) => {
+  setCurrentNote = (note) => {
     this.setState({ currentNote: note })
-}
+  }
 
-resetCurrentNote = () => {
+  resetCurrentNote = () => {
     this.setCurrentNote(this.blankNote())
-}
+  }
 
-saveNote = (note) => {
+  saveNote = (note) => {
     const notes = [...this.state.notes]
 
     if (note.id) {
-    // existing note
-    const i = notes.findIndex(currentNote => currentNote.id === note.id)
-    notes[i] = note
+      // existing note
+      const i = notes.findIndex(currentNote => currentNote.id === note.id)
+      notes[i] = note
     } else {
-    // new note
-    note.id = Date.now()
-    notes.push(note)
+      // new note
+      note.id = Date.now()
+      notes.push(note)
     }
 
     this.setState({ notes, currentNote: note })
-    localStorage.setItem('notes', JSON.stringify(notes))
+  }
 
-}
+  removeCurrentNote = () => {
+    const notes = [...this.state.notes]
+    const i = notes.findIndex(note => note.id === this.state.currentNote.id)
 
-deleteNote = (note) => {
-    if (note.id !== null) {
-
-        const notes = [...this.state.notes]
-
-        const i = notes.findIndex(currentNote => currentNote.id === note.id)
-        notes.splice(i, 1)
-
-        this.setState({ notes, currentNote: this.blankNote() })
-        localStorage.setItem('notes', JSON.stringify(notes))
-
+    if (i > -1) {
+      notes.splice(i, 1)
+      this.setState({ notes })
     }
-}
 
-render() {
+    this.resetCurrentNote()
+  }
+
+  render() {
     return (
-    <div
+      <div
         className="Main"
         style={style}
-    >
-        <Sidebar resetCurrentNote={this.resetCurrentNote} />
+      >
+        <Sidebar
+          resetCurrentNote={this.resetCurrentNote}
+          signOut={this.props.signOut}
+        />
         <NoteList
-        notes={this.state.notes}
-        setCurrentNote={this.setCurrentNote}
+          notes={this.state.notes}
+          setCurrentNote={this.setCurrentNote}
         />
         <NoteForm
-        currentNote={this.state.currentNote}
-        saveNote={this.saveNote}
-        deleteNote={this.deleteNote}
+          currentNote={this.state.currentNote}
+          saveNote={this.saveNote}
+          removeCurrentNote={this.removeCurrentNote}
         />
-    </div>
+      </div>
     )
-}
+  }
 }
 
 const style = {
-display: 'flex',
-height: '100vh',
-alignItems: 'stretch',
+  display: 'flex',
+  height: '100vh',
+  alignItems: 'stretch',
 }
 
 export default Main
