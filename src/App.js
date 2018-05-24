@@ -48,7 +48,7 @@ class App extends Component {
       <div className="App">
         {
           this.signedIn()
-            ? <Main signOut={this.signOut} />
+            ? <Main uid={this.state.uid} signOut={this.signOut} />
             : <SignIn />
         }
 
