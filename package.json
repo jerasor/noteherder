@@ -1,7 +1,7 @@
 {
   "name": "noteherder",
   "version": "0.1.0",
-  "homepage": "http://bootcamp18s1.fretless.com/noteherder/",
+  "homepage": "https://jerasor.github.io/noteherder",
   "private": true,
   "dependencies": {
     "aphrodite": "^2.2.1",
