@@ -24,7 +24,7 @@ class Main extends Component {
 
   saveNote = (note) => {
     let shouldRedirect = false
-    const notes = [...this.state.notes]
+    let notes = [...this.state.notes]
 
     if (note.id) {
       // existing note
@@ -38,6 +38,8 @@ class Main extends Component {
       notes.push(note)
       shouldRedirect = true
     }
+
+    notes = notes.sort((comp1, comp2) => {return (comp2.updatedAt - comp1.updatedAt)})
 
     this.setState(
       { notes },
