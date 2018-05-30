@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import './App.css'
 import { auth } from './base'
@@ -11,28 +12,29 @@ class App extends Component {
   }
 
   componentWillMount() {
+    const uid = localStorage.getItem('uid')
+    if (uid) {
+      this.setState({ uid })
+    }
     auth.onAuthStateChanged(
       (user) => {
         if (user) {
-          this.handleAuth(user.uid)
-          localStorage.setItem('uid', user.uid)
+          this.handleAuth(user)
         } else {
           this.handleUnauth()
-          localStorage.clear()
         }
       }
     )
-
-    this.setState({ uid: localStorage.getItem('uid') })
-
   }
 
-  handleAuth = (uid) => {
-    this.setState({ uid: uid })
+  handleAuth = (user) => {
+    this.setState({ uid: user.uid })
+    localStorage.setItem('uid', user.uid)
   }
 
   handleUnauth = () => {
     this.setState({ uid: null })
+    localStorage.removeItem('uid')
   }
 
   signOut = () => {
@@ -46,11 +48,40 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {
+        <Switch>
+          <Route
+            path="/sign-in"
+            render={navProps => (
+              this.signedIn()
+                ? <Redirect to="/notes" />
+                : <SignIn {...navProps} />
+            )}
+          />
+          <Route
+            path="/notes"
+            render={navProps => (
+              this.signedIn()
+                ? <Main
+                    signOut={this.signOut}
+                    uid={this.state.uid}
+                    {...navProps}
+                  />
+                : <Redirect to="/sign-in" />
+            )}
+          />
+          <Route
+            render={() => (
+              this.signedIn()
+                ? <Redirect to="/notes" />
+                : <Redirect to="/sign-in" />
+            )}
+          />
+        </Switch>
+        {/*
           this.signedIn()
-            ? <Main uid={this.state.uid} signOut={this.signOut} />
+            ? <Main signOut={this.signOut} uid={this.state.uid} />
             : <SignIn />
-        }
+        */}
 
       </div>
     )

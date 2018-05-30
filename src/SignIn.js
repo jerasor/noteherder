@@ -21,13 +21,12 @@ const SignIn = () => {
         <p>You never know when you'll need to write crap down. In fact, you should probably be taking notes right now.</p>
         <button
           className="github"
-          onClick={() => authenticate(githubProvider)}
-        >
+          onClick={() => authenticate(githubProvider)}>
           <i className="fab fa-github"></i>
           Sign in with GitHub
         </button>
-        <button 
-          className="google"  
+        <button
+          className="google"
           onClick={() => authenticate(googleProvider)}
         >
           <img src={googleLogo} alt="" />
