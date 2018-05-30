@@ -1,7 +1,7 @@
 {
   "name": "noteherder",
   "version": "0.1.0",
-  "homepage": "https://jerasor.github.io/noteherder",
+  "homepage": "https://noteherder-22369.firebaseapp.com/",
   "private": true,
   "dependencies": {
     "aphrodite": "^2.2.1",
