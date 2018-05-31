@@ -26,15 +26,15 @@ class Main extends Component {
     let shouldRedirect = false
     let notes = [...this.state.notes]
 
+    note.updatedAt = Date.now()
+
     if (note.id) {
       // existing note
       const i = notes.findIndex(currentNote => currentNote.id === note.id)
       notes[i] = note
-      note.updatedAt = Date.now()
     } else {
       // new note
       note.id = Date.now()
-      note.updatedAt = Date.now()
       notes.push(note)
       shouldRedirect = true
     }
